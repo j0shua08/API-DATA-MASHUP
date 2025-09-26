@@ -28,6 +28,20 @@ show me how to connect two different APIs together in Django
 example: 
       geo = requests.get("https://nominatim.openstreetmap.org/search",
       params={"q": q, "format": "json", "limit": 1}).json()
+      ...
+      else:
+                    lat = geo[0]["lat"]
+                    lon = geo[0]["lon"]
+                    wx_res = requests.get(
+                        "https://api.open-meteo.com/v1/forecast",
+                        params={
+                            "latitude": lat,
+                            "longitude": lon,
+                            "current": "temperature_2m,apparent_temperature",
+                            "timezone": "auto",
+                        },
+                        timeout=5,
+      
 
  show examples of APIs that could be combined, and from there I used Nominatim and Open-Mateo.
 
