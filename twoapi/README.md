@@ -23,8 +23,9 @@ Nominatim gives very detailed names that are too long. The results also vary dep
 
 AI USAGE NOTE
 I used AI to:
- show me how to connect two different APIs together in Django
- example: 
+
+show me how to connect two different APIs together in Django
+example: 
       geo = requests.get("https://nominatim.openstreetmap.org/search",
       params={"q": q, "format": "json", "limit": 1}).json()
 
