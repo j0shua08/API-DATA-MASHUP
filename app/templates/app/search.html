@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <body>
+    <h1>Places + Weather</h1>
+
+    <form id="search-form" method="get">
+      <input type="text" name="q" value="{{ q }}" placeholder="Enter a place" required>
+      <button type="submit">Search</button>
+    </form>
+
+    <p id="loading" style="display:none;">Loading…</p>
+
+    {% if error %}
+      <p style="color:red;">{{ error }}</p>
+      <form method="get">
+        <input type="hidden" name="q" value="{{ q }}">
+        <button type="submit">Retry</button>
+      </form>
+    {% endif %}
+
+    {% if empty and not error %}
+      <p>No results for "<b>{{ q }}</b>". Try a more specific query.</p>
+      <form method="get">
+        <input type="hidden" name="q" value="{{ q }}">
+        <button type="submit">Retry</button>
+      </form>
+    {% endif %}
+
+    <!-- Success state -->
+    {% if result %}
+      <h2>Result</h2>
+      <p><b>Place:</b> {{ result.place }}</p>
+      <p><b>Lat:</b> {{ result.lat }}</p>
+      <p><b>Lon:</b> {{ result.lon }}</p>
+      <p><b>Temp:</b> {{ result.temp }} °C</p>
+      <p><b>Feels Like:</b> {{ result.feels }} °C</p>
+      <p><b>Comfort (feels - temp):</b> {{ result.comfort }}</p>
+
+      <form method="get" style="margin-top:8px;">
+        <button type="submit">Search Again</button>
+      </form>
+    {% elif q and not error and not empty %}
+      <p>Searching for <b>{{ q }}</b>…</p>
+    {% endif %}
+
+    <script>
+      const f = document.getElementById('search-form');
+      const loading = document.getElementById('loading');
+      if (f) {
+        f.addEventListener('submit', function () {
+          loading.style.display = 'block';
+        });
+      }
+    </script>
+  </body>
+</html>
